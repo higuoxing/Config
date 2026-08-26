@@ -177,6 +177,7 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
+        "reverse-scrolling": 1, // Touchpad has natural scrolling; keep scroll-up = volume-up
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
