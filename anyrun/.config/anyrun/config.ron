@@ -1,0 +1,36 @@
+Config(
+  // ... your existing config (x, y, plugins, etc.) ...
+
+  keybinds: [
+    // Move down with Ctrl+n
+    Keybind(
+      key: "n",
+      action: Down,
+      ctrl: true,
+    ),
+    // Move up with Ctrl+p
+    Keybind(
+      key: "p",
+      action: Up,
+      ctrl: true,
+    ),
+
+    // Default navigation keybindings
+    Keybind(
+      key: "Return",
+      action: Select,
+    ),
+    Keybind(
+      key: "Up",
+      action: Up,
+    ),
+    Keybind(
+      key: "Down",
+      action: Down,
+    ),
+    Keybind(
+      key: "Escape",
+      action: Close,
+    ),
+  ],
+)

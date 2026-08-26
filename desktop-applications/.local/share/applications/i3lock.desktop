@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=false
-Exec=betterlockscreen -l blur
-Name=i3lock
-Icon=lock
-Comment=Lock the screen
