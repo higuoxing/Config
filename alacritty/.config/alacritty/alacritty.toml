@@ -22,10 +22,13 @@ yellow = "#f1fa8c"
 background = "#282a36"
 foreground = "#f8f8f2"
 
+[cursor.style]
+shape = "Beam"
+blinking = "Always"
+[cursor.vi_mode_style]
+shape = "Block"
 [cursor]
 blink_interval = 500
-style.blinking = "Always"
-style.shape = "Block"
 thickness = 0.15
 unfocused_hollow = true
 
@@ -33,6 +36,9 @@ unfocused_hollow = true
 LANG = "en_US.UTF-8"
 LC_CTYPE = "en_US.UTF-8"
 TERM = "alacritty"
+
+[font]
+size = 9.0
 
 [font.bold]
 family = "Fira Code"
@@ -46,6 +52,8 @@ style = "Italic"
 family = "Fira Code"
 style = "Regular"
 
-[shell]
-program = "/usr/bin/zsh"
+[terminal]
+
+[terminal.shell]
 args = ["-l", "-c", "tmux attach || tmux"]
+program = "/bin/zsh"
