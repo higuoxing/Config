@@ -10,8 +10,6 @@ Each directory is a stow package that expands into `$HOME`:
 | waybar | `~/.config/waybar` |
 | anyrun | `~/.config/anyrun` |
 | alacritty | `~/.config/alacritty` |
-| fontconfig | `~/.config/fontconfig` |
-| nvim | `~/.nvim/init.vim` |
 | emacs | `~/.emacs.d` (submodule) |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
