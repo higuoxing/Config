@@ -10,16 +10,13 @@ Each directory is a stow package that expands into `$HOME`:
 | waybar | `~/.config/waybar` |
 | anyrun | `~/.config/anyrun` |
 | alacritty | `~/.config/alacritty` |
-| rofi | `~/.config/rofi` |
 | fontconfig | `~/.config/fontconfig` |
 | nvim | `~/.nvim/init.vim` |
 | emacs | `~/.emacs.d` (submodule) |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgres | `~/.psqlrc` |
-| conkyrc | `~/.conkyrc` |
 | natural-scrolling | `~/.local/bin` |
-| seu-wlan | `~/.local/bin` (submodule) |
 | desktop-applications | `~/.local/share/applications` |
 | wallpapers | `~/.wallpapers` |
 
