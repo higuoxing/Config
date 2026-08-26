@@ -9,11 +9,11 @@ Each directory is a stow package that expands into `$HOME`:
 | sway | `~/.config/sway` |
 | waybar | `~/.config/waybar` |
 | anyrun | `~/.config/anyrun` |
-| alacritty | `~/.config/alacritty` |
 | emacs | `~/.emacs.d` (submodule) |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
+| pulseaudio-ctl | `~/.config/pulseaudio-ctl` |
 | wallpapers | `~/.wallpapers` |
 
 ## Usage
