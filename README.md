@@ -17,7 +17,6 @@ Each directory is a stow package that expands into `$HOME`:
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
 | natural-scrolling | `~/.local/bin` |
-| desktop-applications | `~/.local/share/applications` |
 | wallpapers | `~/.wallpapers` |
 
 ## Usage
