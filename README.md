@@ -14,7 +14,6 @@ Each directory is a stow package that expands into `$HOME`:
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
-| natural-scrolling | `~/.local/bin` |
 | wallpapers | `~/.wallpapers` |
 
 ## Usage
