@@ -1,4 +1,4 @@
-# dot-file
+# Laptop
 
 my own dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
@@ -15,7 +15,7 @@ Each directory is a stow package that expands into `$HOME`:
 | emacs | `~/.emacs.d` (submodule) |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
-| postgres | `~/.psqlrc` |
+| postgresql | `~/.psqlrc` |
 | natural-scrolling | `~/.local/bin` |
 | desktop-applications | `~/.local/share/applications` |
 | wallpapers | `~/.wallpapers` |
