@@ -14,7 +14,6 @@ Each directory is a stow package that expands into `$HOME`:
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
 | pulseaudio-ctl | `~/.config/pulseaudio-ctl` |
-| wallpapers | `~/.wallpapers` |
 
 ## Usage
 
