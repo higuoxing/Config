@@ -260,3 +260,5 @@ include ~/.config/sway/config.d/*
 exec nm-applet --indicator
 ## Notification daemon.
 exec mako
+## Input method.
+exec fcitx5
