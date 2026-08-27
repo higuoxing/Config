@@ -18,7 +18,8 @@ sudo -v
 
 # 1. Official packages
 say "Installing official packages"
-sudo pacman -S --needed --noconfirm - < "$REPO_DIR/pkglist.txt"
+# shellcheck disable=SC2046
+sudo pacman -S --needed --noconfirm $(<"$REPO_DIR/pkglist.txt")
 
 # 2. AUR packages (via yay)
 if ! command -v yay >/dev/null 2>&1; then
@@ -33,17 +34,23 @@ fi
 say "Installing AUR packages"
 # Some entries come from the archlinuxcn repo; enable it in pacman.conf
 # (https://www.archlinuxcn.org) if yay cannot find them.
-yay -S --needed --noconfirm - < "$REPO_DIR/pkglist-aur.txt"
+# shellcheck disable=SC2046
+yay -S --needed --noconfirm $(<"$REPO_DIR/pkglist-aur.txt")
 
 # 3. Dotfiles
 say "Linking dotfiles with stow"
 git submodule update --init
+# shellcheck disable=SC2035  # package names come from this fixed directory
 (cd configs && stow -t "$HOME" -R */)
 
 # 4. System services (mirrors this laptop's setup)
-say "Enabling system services"
-sudo systemctl enable --now NetworkManager.service bluetooth.service \
-     cronie.service docker.service
+if [ -d /run/systemd/system ]; then
+    say "Enabling system services"
+    sudo systemctl enable --now NetworkManager.service bluetooth.service \
+         cronie.service docker.service
+else
+    say "No systemd running (container?) — skipping service setup"
+fi
 
 say "Done."
 cat <<'NOTES'

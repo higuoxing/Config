@@ -1,0 +1,52 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Configs and package lists
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install git
+        run: pacman -Sy --noconfirm git
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install test tools
+        run: pacman -Sy --noconfirm stow sway shellcheck curl jq
+
+      - name: ShellCheck scripts
+        run: shellcheck scripts/*.sh
+
+      - name: Official package list resolves
+        run: pacman -S -p $(<pkglist.txt) > /dev/null
+
+      - name: AUR package list exists (warnings only)
+        run: |
+          while read -r pkg; do
+            [ -z "$pkg" ] && continue
+            if ! curl -fsS "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$pkg" \
+                 | jq -e '.resultcount > 0' > /dev/null; then
+              echo "::warning::not on AUR: $pkg (archlinuxcn-only?)"
+            fi
+          done < pkglist-aur.txt
+
+      - name: Stow dry run
+        run: |
+          mkdir -p /tmp/stow-target
+          cd configs && stow -n -t /tmp/stow-target */
+
+      - name: Validate sway config
+        run: |
+          mkdir -p /tmp/stow-target /tmp/xdgrt
+          chmod 700 /tmp/xdgrt
+          stow -d configs -t /tmp/stow-target sway
+          env HOME=/tmp/stow-target XDG_RUNTIME_DIR=/tmp/xdgrt \
+              WLR_BACKENDS=headless WLR_LIBINPUT_NO_DEVICES=1 \
+              sway -C -c /tmp/stow-target/.config/sway/config
