@@ -29,16 +29,21 @@ Install stow: `pacman -S stow`
 2. Stow a single package:
 
    ```
-   stow sway
+   stow -t ~ sway
    ```
 
    or all of them at once:
 
    ```
-   stow */
+   stow -t ~ */
    ```
 
-   - `stow -n sway` — dry run, show what would be linked
-   - `stow -R sway` — restow after pulling updates
-   - `stow -D sway` — remove a package's links
-   - `stow --adopt sway` — replace existing real files in `$HOME` by moving them into the repo and linking; review with `git diff` afterwards
+   The `-t ~` target is required unless the repo is cloned directly into
+   `$HOME`: stow's default target is the parent directory of the repo,
+   which links dotfiles into the wrong place anywhere else (e.g. a repo
+   at `~/x/gh/Laptop`).
+
+   - `stow -n -t ~ sway` — dry run, show what would be linked
+   - `stow -R -t ~ sway` — restow after pulling updates
+   - `stow -D -t ~ sway` — remove a package's links
+   - `stow --adopt -t ~ sway` — replace existing real files in `$HOME` by moving them into the repo and linking; review with `git diff` afterwards
