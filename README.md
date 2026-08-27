@@ -46,3 +46,24 @@ Install stow: `pacman -S stow`
    - `stow -R -t ~ sway` — restow after pulling updates
    - `stow -D -t ~ sway` — remove a package's links
    - `stow --adopt -t ~ sway` — replace existing real files in `$HOME` by moving them into the repo and linking; review with `git diff` afterwards
+
+## Deploying to a new laptop
+
+On a fresh Arch Linux install, clone the repo and run:
+
+   ```
+   git clone --recurse-submodules <url> ~/x/gh/Laptop
+   ~/x/gh/Laptop/bootstrap.sh
+   ```
+
+The script installs every package listed in `pkglist.txt` (official repos)
+and `pkglist-aur.txt` (AUR, via yay), stows all dotfiles, and enables the
+system services this laptop runs (NetworkManager, bluetooth, cronie,
+docker).
+
+After intentionally installing or removing packages on any machine, refresh
+the lists and commit them:
+
+   ```
+   scripts/update-pkgs.sh
+   ```
