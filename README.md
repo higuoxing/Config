@@ -57,8 +57,9 @@ On a fresh Arch Linux install, clone the repo and run:
    ~/x/gh/Laptop/scripts/bootstrap.sh
    ```
 
-The script installs every package listed in `pkglist.txt` (official repos)
-and `pkglist-aur.txt` (AUR, via yay), stows all dotfiles, and enables the
+The script installs every package listed in `pkglist.txt` (official repos),
+`pkglist-cn.txt` (archlinuxcn — the repo is enabled automatically), and
+`pkglist-aur.txt` (AUR, via yay), stows all dotfiles, and enables the
 system services this laptop runs (NetworkManager, bluetooth, cronie,
 docker).
 

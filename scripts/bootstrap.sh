@@ -21,7 +21,7 @@ say "Installing official packages"
 # shellcheck disable=SC2046
 sudo pacman -S --needed --noconfirm $(<"$REPO_DIR/pkglist.txt")
 
-# 2. AUR packages (via yay)
+# 2. yay (AUR helper)
 if ! command -v yay >/dev/null 2>&1; then
     say "Installing yay (AUR helper)"
     sudo pacman -S --needed --noconfirm base-devel
@@ -31,19 +31,34 @@ if ! command -v yay >/dev/null 2>&1; then
     (cd "$yay_tmp/yay-bin" && makepkg -si --noconfirm)
 fi
 
+# 3. archlinuxcn repo (patched gtk2, some proprietary packages)
+if ! grep -q '^\[archlinuxcn\]' /etc/pacman.conf; then
+    say "Enabling the archlinuxcn repository"
+    # shellcheck disable=SC2016  # $arch is expanded by pacman, not the shell
+    printf '\n[archlinuxcn]\nServer = https://repo.archlinuxcn.org/$arch\n' \
+        | sudo tee -a /etc/pacman.conf > /dev/null
+    sudo pacman -Sy
+    sudo pacman -S --needed --noconfirm archlinuxcn-keyring
+fi
+
+say "Installing archlinuxcn packages"
+if [ -s "$REPO_DIR/pkglist-cn.txt" ]; then
+    # shellcheck disable=SC2046
+    sudo pacman -S --needed --noconfirm $(<"$REPO_DIR/pkglist-cn.txt")
+fi
+
+# 4. AUR packages
 say "Installing AUR packages"
-# Some entries come from the archlinuxcn repo; enable it in pacman.conf
-# (https://www.archlinuxcn.org) if yay cannot find them.
 # shellcheck disable=SC2046
 yay -S --needed --noconfirm $(<"$REPO_DIR/pkglist-aur.txt")
 
-# 3. Dotfiles
+# 5. Dotfiles
 say "Linking dotfiles with stow"
 git submodule update --init
 # shellcheck disable=SC2035  # package names come from this fixed directory
 (cd configs && stow -t "$HOME" -R */)
 
-# 4. System services (mirrors this laptop's setup)
+# 6. System services (mirrors this laptop's setup)
 if [ -d /run/systemd/system ]; then
     say "Enabling system services"
     sudo systemctl enable --now NetworkManager.service bluetooth.service \

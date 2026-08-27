@@ -27,6 +27,13 @@ jobs:
       - name: Official package list resolves
         run: pacman -S -p $(<pkglist.txt) > /dev/null
 
+      - name: archlinuxcn package list resolves
+        run: |
+          printf '\n[archlinuxcn]\nServer = https://repo.archlinuxcn.org/$arch\n' >> /etc/pacman.conf
+          pacman -Sy --noconfirm
+          pacman -S --noconfirm --needed archlinux-keyring archlinuxcn-keyring
+          pacman -S -p $(<pkglist-cn.txt) > /dev/null
+
       - name: AUR package list exists (warnings only)
         run: |
           while read -r pkg; do

@@ -61,8 +61,8 @@ efibootmgr
 emacs
 ethtool
 evince
-ex-vi-compat
 expect
+ex-vi-compat
 fakeroot
 fcitx5
 fcitx5-chinese-addons
@@ -150,8 +150,8 @@ mpdecimal
 musl
 neovim
 net-tools
-network-manager-applet
 networkmanager
+network-manager-applet
 networkmanager-openconnect
 nfs-utils
 ninja
