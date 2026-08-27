@@ -13,7 +13,6 @@ Each directory is a stow package that expands into `$HOME`:
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
-| pulseaudio-ctl | `~/.config/pulseaudio-ctl` |
 
 ## Usage
 
