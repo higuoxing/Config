@@ -54,7 +54,7 @@ On a fresh Arch Linux install, clone the repo and run:
 
    ```
    git clone --recurse-submodules <url> ~/x/gh/Laptop
-   ~/x/gh/Laptop/bootstrap.sh
+   ~/x/gh/Laptop/scripts/bootstrap.sh
    ```
 
 The script installs every package listed in `pkglist.txt` (official repos)
@@ -65,7 +65,7 @@ docker).
 This pairs well with [archinstall](https://archinstall.readthedocs.io/):
 pick the `minimal` profile (skip the desktop profiles — packages and
 configs come from this repo), enter `git` at the "Additional packages"
-prompt, then clone and run `bootstrap.sh` after the first boot.
+prompt, then clone and run `scripts/bootstrap.sh` after the first boot.
 
 After intentionally installing or removing packages on any machine, refresh
 the lists and commit them:

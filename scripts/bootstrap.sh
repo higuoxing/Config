@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Deploy this repo's packages and dotfiles to a fresh Arch Linux machine.
 #
-# Usage: ./bootstrap.sh
+# Usage: ./scripts/bootstrap.sh
 #
 # Expects a running Arch Linux with network access and a user with sudo
 # privileges. Safe to re-run: every step is idempotent.
 
 set -euo pipefail
 
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
 say()  { printf '\033[1;32m==>\033[0m %s\n' "$*"; }
