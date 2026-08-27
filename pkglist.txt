@@ -285,4 +285,3 @@ zellij
 zig
 zip
 zsh
-zsh-completions
