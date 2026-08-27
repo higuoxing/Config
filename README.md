@@ -61,6 +61,11 @@ and `pkglist-aur.txt` (AUR, via yay), stows all dotfiles, and enables the
 system services this laptop runs (NetworkManager, bluetooth, cronie,
 docker).
 
+This pairs well with [archinstall](https://archinstall.readthedocs.io/):
+pick the `minimal` profile (skip the desktop profiles — packages and
+configs come from this repo), enter `git` at the "Additional packages"
+prompt, then clone and run `bootstrap.sh` after the first boot.
+
 After intentionally installing or removing packages on any machine, refresh
 the lists and commit them:
 
