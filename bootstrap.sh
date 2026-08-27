@@ -38,7 +38,7 @@ yay -S --needed --noconfirm - < "$REPO_DIR/pkglist-aur.txt"
 # 3. Dotfiles
 say "Linking dotfiles with stow"
 git submodule update --init
-stow -t "$HOME" -R */
+(cd configs && stow -t "$HOME" -R */)
 
 # 4. System services (mirrors this laptop's setup)
 say "Enabling system services"
@@ -49,7 +49,7 @@ say "Done."
 cat <<'NOTES'
 
 Notes for the new machine:
-  - Hardware-specific sway settings live in sway/.config/sway/config:
+  - Hardware-specific sway settings live in configs/sway/.config/sway/config:
       output eDP-1 scale 1.5        -> find yours: swaymsg -t get_outputs
       input "1739:52619:..."        -> find yours: swaymsg -t get_inputs
   - If this machine should not run cronie/docker, disable them and drop
