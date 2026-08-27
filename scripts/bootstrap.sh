@@ -49,9 +49,10 @@ say "Done."
 cat <<'NOTES'
 
 Notes for the new machine:
-  - Hardware-specific sway settings live in configs/sway/.config/sway/config:
-      output eDP-1 scale 1.5        -> find yours: swaymsg -t get_outputs
-      input "1739:52619:..."        -> find yours: swaymsg -t get_inputs
+  - Display scale is per-machine; edit
+      configs/sway/.config/sway/config.d/10-output.conf
+    and find the output name with: swaymsg -t get_outputs
+    (touchpad settings match any touchpad automatically)
   - If this machine should not run cronie/docker, disable them and drop
     them from pkglist.txt (see scripts/update-pkgs.sh).
   - Log out and back in (or reboot) to start sway.

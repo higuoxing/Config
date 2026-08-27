@@ -16,12 +16,13 @@ set $term kitty
 
 ### Outputs
 
-# Laptop display.
-output eDP-1 scale 1.5
+# Display outputs and scale are machine-specific; edit
+# config.d/10-output.conf on each laptop.
 
 ### Input
 
-input "1739:52619:SYNA8006:00_06CB:CD8B_Touchpad" {
+# Matches any touchpad, so the same settings work across laptops.
+input type:touchpad {
   tap enabled
   # Disable (touchpad) while typing.
   dwt enabled
