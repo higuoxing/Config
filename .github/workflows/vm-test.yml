@@ -57,6 +57,9 @@ jobs:
           for i in $(seq 1 120); do
             if ssh "${SSHOPTS[@]}" true 2>/dev/null; then
               echo "SSH up after $((i * 5))s"
+              # cloud-init may still be installing packages (pacman
+              # lock) — wait until it is fully done.
+              ssh "${SSHOPTS[@]}" 'cloud-init status --wait'
               exit 0
             fi
             sleep 5
