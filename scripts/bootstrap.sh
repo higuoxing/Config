@@ -61,6 +61,9 @@ say "Linking dotfiles with stow"
 say "Stowing root configs"
 # shellcheck disable=SC2035  # package names come from this fixed directory
 (cd root && sudo stow -t / -R */)
+# The greeter user must traverse $HOME to read the symlinked
+# /etc/tuigreet/config.toml.
+setfacl -m "u:greeter:--x" "$HOME" 2>/dev/null || true
 
 # 6. Emacs config (lives in its own repo, not stowed)
 say "Cloning emacs config"
