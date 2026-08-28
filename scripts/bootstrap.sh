@@ -17,6 +17,8 @@ say "Deploying packages and dotfiles from $REPO_DIR"
 sudo -v
 
 # 1. Official packages
+say "Refreshing package databases"
+sudo pacman -Sy
 say "Installing official packages"
 # shellcheck disable=SC2046
 sudo pacman -S --needed --noconfirm $(<"$REPO_DIR/pkglist.txt")

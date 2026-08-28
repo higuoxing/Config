@@ -1,0 +1,111 @@
+name: VM test
+
+# Full end-to-end verification: boots a real Arch Linux in QEMU (with
+# KVM), runs scripts/bootstrap.sh inside it, then checks the systemd
+# services and the greetd login screen. Heavy, so it only runs on
+# demand or weekly.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 4 * * 1'
+
+jobs:
+  vm-test:
+    name: Boot Arch in QEMU, bootstrap, verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Install QEMU tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-system-x86 qemu-utils \
+            cloud-image-utils openssh-client socat imagemagick
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Arch cloud image
+        run: |
+          curl -fL --retry 3 -o arch.qcow2 \
+            https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-cloudimg.qcow2
+          qemu-img resize arch.qcow2 +40G
+
+      - name: Create cloud-init seed
+        run: |
+          ssh-keygen -t ed25519 -f vm-key -N '' -q
+          KEY=$(cat vm-key.pub)
+          printf '#cloud-config\npackages:\n  - sudo\nusers:\n  - name: v\n    sudo: "ALL=(ALL) NOPASSWD:ALL"\n    shell: /bin/bash\n    ssh_authorized_keys:\n      - %s\n' "$KEY" > user-data
+          printf 'instance-id: laptop-ci\nlocal-hostname: laptop-ci\n' > meta-data
+          cloud-localds seed.iso user-data meta-data
+
+      - name: Boot VM
+        run: |
+          qemu-system-x86_64 \
+            -enable-kvm -m 4096 -smp 4 \
+            -drive file=arch.qcow2,if=virtio \
+            -drive file=seed.iso,if=virtio \
+            -netdev user,id=n1,hostfwd=tcp::2222-:22 \
+            -device virtio-net-pci,netdev=n1 \
+            -monitor unix:/tmp/qemu-mon,server,nowait \
+            -serial file:vm-serial.log \
+            -nographic -daemonize -pidfile qemu.pid
+
+      - name: Wait for SSH
+        run: |
+          SSHOPTS=(-i vm-key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 v@localhost)
+          for i in $(seq 1 120); do
+            if ssh "${SSHOPTS[@]}" true 2>/dev/null; then
+              echo "SSH up after $((i * 5))s"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "VM never became reachable"
+          tail -50 vm-serial.log
+          exit 1
+
+      - name: Copy repo and refresh keyring
+        run: |
+          SSHOPTS=(-i vm-key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 v@localhost)
+          tar czf repo.tgz .
+          ssh "${SSHOPTS[@]}" 'mkdir -p ~/laptop'
+          cat repo.tgz | ssh "${SSHOPTS[@]}" 'tar xzf - -C ~/laptop'
+          ssh "${SSHOPTS[@]}" 'sudo pacman -Sy --noconfirm archlinux-keyring'
+
+      - name: Run bootstrap.sh in the VM
+        run: |
+          SSHOPTS=(-i vm-key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 v@localhost)
+          ssh "${SSHOPTS[@]}" 'cd ~/laptop && ./scripts/bootstrap.sh'
+
+      - name: Verify services and greeter
+        run: |
+          SSHOPTS=(-i vm-key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 v@localhost)
+          ssh "${SSHOPTS[@]}" '
+            set -e
+            for s in greetd NetworkManager cronie docker; do
+              systemctl is-active --quiet $s || { echo "$s not active"; exit 1; }
+            done
+            sudo -u greeter cat /etc/tuigreet/config.toml > /dev/null
+            sudo systemctl restart greetd
+            sleep 3
+            pgrep -f "tuigreet --cmd sway" > /dev/null
+            echo "all VM checks passed"
+          '
+
+      - name: Capture login screen
+        continue-on-error: true
+        run: |
+          echo 'screendump /tmp/login.ppm' | socat - UNIX-CONNECT:/tmp/qemu-mon
+          sleep 2
+          convert /tmp/login.ppm /tmp/login.png
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vm-logs
+          path: |
+            vm-serial.log
+            /tmp/login.png
+          if-no-files-found: ignore
