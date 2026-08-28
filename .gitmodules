@@ -1,3 +1,0 @@
-[submodule "emacs/.emacs.d"]
-	path = configs/emacs/.emacs.d
-	url = https://github.com/higuoxing/.emacs.d

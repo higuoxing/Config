@@ -9,7 +9,6 @@ Each directory under `configs/` is a stow package that expands into `$HOME`:
 | sway | `~/.config/sway` |
 | waybar | `~/.config/waybar` |
 | anyrun | `~/.config/anyrun` |
-| emacs | `~/.emacs.d` (submodule) |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
@@ -18,10 +17,10 @@ Each directory under `configs/` is a stow package that expands into `$HOME`:
 
 Install stow: `pacman -S stow`
 
-1. Clone with submodules:
+1. Clone:
 
    ```
-   git clone --recurse-submodules <url> ~/dotfiles
+   git clone <url> ~/dotfiles
    cd ~/dotfiles
    ```
 
@@ -53,14 +52,15 @@ Install stow: `pacman -S stow`
 On a fresh Arch Linux install, clone the repo and run:
 
    ```
-   git clone --recurse-submodules <url> ~/x/gh/Laptop
+   git clone <url> ~/x/gh/Laptop
    ~/x/gh/Laptop/scripts/bootstrap.sh
    ```
 
 The script installs every package listed in `pkglist.txt` (official repos),
 `pkglist-cn.txt` (archlinuxcn — the repo is enabled automatically), and
-`pkglist-aur.txt` (AUR, via yay), stows all dotfiles, and enables the
-system services this laptop runs (NetworkManager, bluetooth, cronie,
+`pkglist-aur.txt` (AUR, via yay), stows all dotfiles, clones the emacs
+config from its own repo (`github.com/higuoxing/.emacs.d`), and enables
+the system services this laptop runs (NetworkManager, bluetooth, cronie,
 docker).
 
 This pairs well with [archinstall](https://archinstall.readthedocs.io/):

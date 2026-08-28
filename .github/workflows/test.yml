@@ -15,8 +15,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Install test tools
         run: pacman -Sy --noconfirm stow sway shellcheck curl jq

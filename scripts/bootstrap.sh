@@ -54,11 +54,19 @@ yay -S --needed --noconfirm $(<"$REPO_DIR/pkglist-aur.txt")
 
 # 5. Dotfiles
 say "Linking dotfiles with stow"
-git submodule update --init
 # shellcheck disable=SC2035  # package names come from this fixed directory
 (cd configs && stow -t "$HOME" -R */)
 
-# 6. System services (mirrors this laptop's setup)
+# 6. Emacs config (lives in its own repo, not stowed)
+say "Cloning emacs config"
+if [ -e "$HOME/.emacs.d/.git" ]; then
+    say "$HOME/.emacs.d already present — leaving it alone"
+else
+    git clone --recurse-submodules https://github.com/higuoxing/.emacs.d \
+        "$HOME/.emacs.d"
+fi
+
+# 7. System services (mirrors this laptop's setup)
 if [ -d /run/systemd/system ]; then
     say "Enabling system services"
     sudo systemctl enable --now NetworkManager.service bluetooth.service \
