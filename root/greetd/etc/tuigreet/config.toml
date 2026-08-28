@@ -1,0 +1,36 @@
+[display]
+show_time = true
+battery = true
+
+[secret]
+mode = "characters"
+
+[remember]
+username = true
+
+[layout]
+width = 64
+window_padding = 2
+container_padding = 2
+
+[theme]
+border = "#6272a4"
+text = "#f8f8f2"
+time = "#8be9fd"
+container = "#282a36"
+title = "#ff79c6"
+greet = "#50fa7b"
+prompt = "#bd93f9"
+input = "#f8f8f2"
+action = "#ffb86c"
+button = "#6272a4"
+
+[background]
+kind = "doom"
+
+[background.doom]
+height = 5
+spread = 2
+top_color = "#f1fa8c"
+middle_color = "#ffb86c"
+bottom_color = "#ff5555"

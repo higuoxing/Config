@@ -55,7 +55,12 @@ yay -S --needed --noconfirm $(<"$REPO_DIR/pkglist-aur.txt")
 # 5. Dotfiles
 say "Linking dotfiles with stow"
 # shellcheck disable=SC2035  # package names come from this fixed directory
-(cd configs && stow -t "$HOME" -R */)
+(cd user && stow -t "$HOME" -R */)
+
+# Root configs (greetd) — stow target is /, hence sudo
+say "Stowing root configs"
+# shellcheck disable=SC2035  # package names come from this fixed directory
+(cd root && sudo stow -t / -R */)
 
 # 6. Emacs config (lives in its own repo, not stowed)
 say "Cloning emacs config"
@@ -80,7 +85,7 @@ cat <<'NOTES'
 
 Notes for the new machine:
   - Display scale is per-machine; edit
-      configs/sway/.config/sway/config.d/10-output.conf
+      user/sway/.config/sway/config.d/10-output.conf
     and find the output name with: swaymsg -t get_outputs
     (touchpad settings match any touchpad automatically)
   - If this machine should not run cronie/docker, disable them and drop

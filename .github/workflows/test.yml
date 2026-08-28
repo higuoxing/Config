@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install test tools
-        run: pacman -Sy --noconfirm stow sway shellcheck curl jq
+        run: pacman -Sy --noconfirm stow sway shellcheck curl jq greetd-tuigreet
 
       - name: ShellCheck scripts
         run: shellcheck scripts/*.sh
@@ -45,13 +45,22 @@ jobs:
       - name: Stow dry run
         run: |
           mkdir -p /tmp/stow-target
-          cd configs && stow -n -t /tmp/stow-target */
+          cd user && stow -n -t /tmp/stow-target */
+
+      - name: Root configs stow dry run
+        run: |
+          mkdir -p /tmp/root-target
+          cd root && stow -n -t /tmp/root-target */
+
+      - name: Validate tuigreet config
+        run: |
+          script -qc 'tuigreet --config root/greetd/etc/tuigreet/config.toml --dump-config' /dev/null > /dev/null
 
       - name: Validate sway config
         run: |
           mkdir -p /tmp/stow-target /tmp/xdgrt
           chmod 700 /tmp/xdgrt
-          stow -d configs -t /tmp/stow-target sway
+          stow -d user -t /tmp/stow-target sway
           # Arch sets cap_sys_nice on the sway binary; the runner refuses
           # to exec binaries with file capabilities (EPERM). Config
           # validation does not need it.
