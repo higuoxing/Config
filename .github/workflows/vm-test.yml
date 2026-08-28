@@ -49,7 +49,7 @@ jobs:
             -device virtio-net-pci,netdev=n1 \
             -monitor unix:/tmp/qemu-mon,server,nowait \
             -serial file:vm-serial.log \
-            -nographic -daemonize -pidfile qemu.pid
+            -display none -daemonize -pidfile qemu.pid
 
       - name: Wait for SSH
         run: |
