@@ -54,6 +54,10 @@ jobs:
           mkdir -p /tmp/stow-target /tmp/xdgrt
           chmod 700 /tmp/xdgrt
           stow -d configs -t /tmp/stow-target sway
+          # Arch sets cap_sys_nice on the sway binary; the runner refuses
+          # to exec binaries with file capabilities (EPERM). Config
+          # validation does not need it.
+          setcap -r /usr/bin/sway || true
           env HOME=/tmp/stow-target XDG_RUNTIME_DIR=/tmp/xdgrt \
               WLR_BACKENDS=headless WLR_LIBINPUT_NO_DEVICES=1 \
               sway -C -c /tmp/stow-target/.config/sway/config
