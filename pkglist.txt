@@ -117,6 +117,7 @@ ksh
 kubectl
 kubo
 ld-lsb
+less
 libdwarf
 libical
 libime
@@ -129,8 +130,6 @@ libxml++
 linux
 linux-firmware
 linux-headers
-linux-lts
-linux-lts-headers
 lld
 lldb
 llvm
