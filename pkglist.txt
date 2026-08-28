@@ -94,6 +94,8 @@ go-task
 go-yq
 gperf
 gradle
+greetd
+greetd-tuigreet
 grub
 gtkwave
 helix
