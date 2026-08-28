@@ -27,8 +27,3 @@ button = "#6272a4"
 
 [background]
 kind = "matrix"
-
-[background.matrix]
-head_color = "#bd93f9"
-bright_color = "#8be9fd"
-dim_color = "#6272a4"
