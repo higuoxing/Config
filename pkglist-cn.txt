@@ -1,5 +1,0 @@
-archlinuxcn-keyring
-downgrade
-gtk2
-libtree
-tio
