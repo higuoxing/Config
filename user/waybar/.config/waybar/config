@@ -19,13 +19,12 @@
         // "idle_inhibitor",
         "pulseaudio",
         "network",
-        "power-profiles-daemon",
         "disk",
         "cpu",
         "memory",
         "temperature",
         "backlight",
-        "keyboard-state",
+        "power-profiles-daemon",
         "battery",
         "clock",
         "tray",
@@ -47,15 +46,6 @@
     //         "default": ""
     //     }
     // },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
