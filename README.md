@@ -10,6 +10,7 @@ Each directory under `user/` is a stow package that expands into `$HOME`:
 | waybar | `~/.config/waybar` |
 | anyrun | `~/.config/anyrun` |
 | chrome | `~/.local/share/applications/google-chrome.desktop` (launches with `--ozone-platform=wayland`) |
+| fcitx5 | `~/.config/fcitx5/config` and `conf/waylandim.conf` |
 | tmux | `~/.tmux.conf` |
 | npm | `~/.npmrc` |
 | postgresql | `~/.psqlrc` |
